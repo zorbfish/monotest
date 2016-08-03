@@ -1,6 +1,6 @@
 using Nancy;
 
-namespace Monotest {
+namespace MonoTest {
    public class TestModule : NancyModule {
       public TestModule() {
          Get["/"] = parameters => "Hello World!";
