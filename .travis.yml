@@ -5,4 +5,4 @@ install:
   - nuget install xunit.runner.console -Version 2.1.0 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release MonoTest.sln
-  - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe -noappdomain ./MonoTest.Tests/bin/Release/MonoTest.Tests.dll
+  - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./MonoTest.Tests/bin/Release/MonoTest.Tests.dll -noappdomain
