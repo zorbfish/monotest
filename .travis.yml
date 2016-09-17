@@ -32,6 +32,7 @@ deploy:
     bundle_type: zip
     application: MonoTest
     deployment_group: MonoTest
+    region: us-west-2
     on:
       repo: zorbfish/monotest
       all_branches: true
