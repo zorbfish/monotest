@@ -17,17 +17,18 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     local_dir: deploy
-    bucket: deploy-monotest
+    bucket: monotest-deploy
     skip_cleanup: true
     acl: public_read
     detect_encoding: true
+    region: us-west-2
     on:
       repo: zorbfish/monotest
       all_branches: true
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: deploy-monotest
+    bucket: monotest-deploy
     key: MonoTest.zip
     bundle_type: zip
     application: MonoTest
