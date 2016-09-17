@@ -18,7 +18,6 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     local_dir: deploy
     bucket: monotest
-    region: Oregon
     skip_cleanup: true
     acl: public_read
     detect_encoding: true
@@ -33,7 +32,6 @@ deploy:
     bundle_type: zip
     application: MonoTest
     deployment_group: MonoTest
-    region: Oregon
     on:
       repo: zorbfish/monotest
       all_branches: true
