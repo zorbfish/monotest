@@ -6,3 +6,34 @@ install:
 script:
   - xbuild /p:Configuration=Release MonoTest.sln
   - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./MonoTest.Tests/bin/Release/MonoTest.Tests.dll -noappdomain
+
+before_deploy:
+  - mkdir -p "deploy"
+  - zip -r MonoTest.zip MonoTest/bin/Release scripts appspec.yml || true
+  - mv MonoTest.zip deploy/MonoTest.zip || true
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: deploy
+    bucket: monotest
+    region: Oregon
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
+    on:
+      repo: zorbfish/monotest
+      all_branches: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: monotest
+    key: MonoTest.zip
+    bundle_type: zip
+    application: MonoTest
+    deployment_group: MonoTest
+    region: Oregon
+    on:
+      repo: zorbfish/monotest
+      all_branches: true
