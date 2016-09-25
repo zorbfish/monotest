@@ -1,14 +1,16 @@
 version: 0.0
 os: linux
 files:
-  - source: /
+  - source: /MonoTest
     destination: /home/ubuntu
+  - source: /scripts/monotest.conf
+    destination: /etc/init
 hooks:
-  BeforeInstall:
-    - location: scripts/before-install.sh
+  ApplicationStop:
+    - location: scripts/stop-service.sh
       runas: root
   ApplicationStart:
-    - location: scripts/install.sh
+    - location: scripts/start-service.sh
       runas: root
   ValidateService:
     - location: scripts/validate-install.sh
