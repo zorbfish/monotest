@@ -1,16 +1,22 @@
 language: csharp
+
+env:
+  - DATE = `date +%Y-%m-%d`
+
 solution: MonoTest.sln
+
 install:
   - nuget restore MonoTest.sln
   - nuget install xunit.runner.console -Version 2.1.0 -OutputDirectory testrunner
+
 script:
   - xbuild /p:Configuration=Release MonoTest.sln
   - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./MonoTest.Tests/bin/Release/MonoTest.Tests.dll -noappdomain
 
 before_deploy:
-  - mkdir -p "deploy"
-  - zip -r MonoTest.zip MonoTest/bin/Release scripts appspec.yml || true
-  - mv MonoTest.zip deploy/MonoTest.zip || true
+  - mkdir "deploy"
+  - mv MonoTest/bin/Release/* build/MonoTest
+  - tar -zcvf deploy/MonoTest-$DATE-$TRAVIS_COMMIT.tar.gz build/* || true
 
 deploy:
   - provider: s3
@@ -29,8 +35,8 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: monotest-deploy
-    key: MonoTest.zip
-    bundle_type: zip
+    key: MonoTest-$DATE-$TRAVIS_COMMIT.tar.gz
+    bundle_type: tgz 
     application: MonoTest
     deployment_group: MonoTest
     region: us-west-2
