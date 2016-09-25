@@ -14,7 +14,7 @@ before_deploy:
   - export DATE=`date +%Y-%m-%d`
   - mkdir -p "deploy"
   - mv MonoTest/bin/Release/* build/MonoTest || true
-  - tar -zcvf deploy/MonoTest-$DATE-$TRAVIS_COMMIT.tar.gz build/* || true
+  - tar -zcvf deploy/MonoTest-$DATE-$TRAVIS_COMMIT.tar.gz -C build * || true
 
 deploy:
   - provider: s3
