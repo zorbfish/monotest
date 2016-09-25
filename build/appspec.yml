@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /MonoTest
-    destination: /home/ubuntu
+    destination: /home/ubuntu/MonoTest
   - source: /scripts/monotest.conf
     destination: /etc/init
 hooks:
