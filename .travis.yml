@@ -1,8 +1,5 @@
 language: csharp
 
-env:
-  - DATE = `date +%Y-%m-%d`
-
 solution: MonoTest.sln
 
 install:
@@ -14,6 +11,7 @@ script:
   - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./MonoTest.Tests/bin/Release/MonoTest.Tests.dll -noappdomain
 
 before_deploy:
+  - export DATE=`date +%Y-%m-%d`
   - mkdir "deploy"
   - mv MonoTest/bin/Release/* build/MonoTest
   - tar -zcvf deploy/MonoTest-$DATE-$TRAVIS_COMMIT.tar.gz build/* || true
