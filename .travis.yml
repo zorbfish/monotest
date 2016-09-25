@@ -13,6 +13,7 @@ script:
 before_deploy:
   - export DATE=`date +%Y-%m-%d`
   - mkdir -p "deploy"
+  - ls -ar 
   - mv MonoTest/bin/Release/* build/MonoTest
   - tar -zcvf deploy/MonoTest-$DATE-$TRAVIS_COMMIT.tar.gz build/* || true
 
